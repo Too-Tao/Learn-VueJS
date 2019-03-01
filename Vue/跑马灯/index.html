@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <title>跑马灯</title>
+</head>
+<body>
+  <div id="app">
+    输入跑马灯文字：<input type="text" v-model="message">
+    <button @click="run">Run</button>
+    <button @click="stop">Stop</button>
+    <p>{{ message }}</p>
+  </div>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        message: '',
+        isRun: null
+      },
+      methods: {
+        run: function () {
+          if( this.isRun != null) return
+          this.isRun = setInterval(() => {
+              var start,
+                  end
+              start = this.message.substring(0,1)
+              end = this.message.substring(1)
+              this.message = end + start
+            },300)
+        },
+        stop: function () {
+          clearInterval(this.isRun)
+          this.isRun = null
+        }
+      }
+    })
+  </script>
+</body>
+</html>

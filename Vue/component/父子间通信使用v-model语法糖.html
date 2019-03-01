@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <title>父子间通信使用v-model语法糖</title>
+</head>
+<body>
+  <div id="app">
+    <p>总数： {{ total }}</p>
+    <my-component v-model="total"></my-component>
+  </div>
+  <script>
+    var Mycomponent = {
+      template: `
+        <button @click="handleClick">+1</button>
+      `,
+      data: function () {
+        return {
+          counter: 0
+        }
+      },
+      methods: {
+        handleClick: function () {
+          this.counter++ 
+          this.$emit('input',this.counter)
+        }
+      }
+    }
+
+    var app = new Vue({
+      el: '#app',
+      data: {
+        total: 0
+      },
+      components: {
+        'my-component': Mycomponent
+      }
+    })
+  </script>
+</body>
+</html>

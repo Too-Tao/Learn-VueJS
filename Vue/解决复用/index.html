@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <title>复用</title>
+</head>
+
+<body>
+  <div id="app">
+    <template v-if="type === 'name' ">
+      <label>用户名</label>
+      <input type="text" key="name-input">
+    </template>
+    <template v-else="type === 'mail' ">
+      <label>邮箱</label>
+      <input type="text" key="mail-input">
+    </template>
+    <button @click="handleChangeType">切换</button>
+  </div>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        type: 'name'
+      },
+      methods: {
+        handleChangeType: function () {
+          this.type = this.type === 'name' ? 'mail' : 'name'
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

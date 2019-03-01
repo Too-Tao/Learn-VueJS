@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <title>filter&sort</title>
+</head>
+<body>
+  <div id="app">
+    <!-- <template v-for="book in books">
+      <li>书名：{{ book.name }}</li>
+      <li>作者：{{ book.author }}</li>
+    </template> -->
+    <template v-if="type === 'filter'" v-for="book in filterBooks">
+      <li>书名：{{ book.name }}</li>
+      <li>作者：{{ book.author }}</li>
+    </template>
+    <template v-if="type === 'sort'" v-for="book in sortBooks">
+      <li>书名：{{ book.name }}</li>
+      <li>作者：{{ book.author }}</li>
+    </template>
+    <button @click="clickFilter">Filter</button>
+    <button @click="clickSort">Sort</button>
+  </div>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        books:[
+          {
+            name: '《1》',
+            author: '梁'
+          },
+          {
+            name: '《2》',
+            author: '2222'
+          },
+          {
+            name: '《React》',
+            author: '3333'
+          },
+        ],
+        type: ''
+      },
+      methods: {
+        clickFilter: function () {
+          this.type = 'filter'
+        },
+        clickSort: function () {
+          this.type = 'sort'
+        }
+      },
+      computed: {
+        filterBooks: function () {
+          return this.books.filter(function (book) {
+            return book.name.match(/React/)
+          })
+        },
+        sortBooks: function () {
+          return this.books.sort(function ( a , b ) {
+            return a.name.length < b.name.length
+          })
+        }
+      }
+    })
+  </script>
+</body>
+</html>
