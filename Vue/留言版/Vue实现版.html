@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <title>Vue实现留言版</title>
+</head>
+<body>
+  <!-- 使用v-model双向绑定
+      v-for 循环输出列表
+      unshift将新加进的信息排列在前面 -->
+  <div id="app">
+    <h2>留言版</h2>
+    <input type="text" v-model="input">
+    <button @click="btn">添加</button>
+    <ul>
+      <li v-for="item in list">{{ item }}</li>
+    </ul>
+  </div>
+  <script>
+    
+    var app = new Vue({
+      el: '#app',
+      data: {
+        input: '',
+        list: []
+      },
+      methods: {
+        btn: function () {
+          //尾部添加数据
+          // this.list.push(this.input)
+          
+          //首部添加数据
+          this.list.unshift(this.input)
+          this.input = ''
+        }
+      }
+    })
+  </script>
+</body>
+</html>
