@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>JS原生实现留言版</title>
+</head>
+<body>
+  <div class="div">
+    <h2>留言版</h2>
+    <input type="text" id="input">
+    <button id="button">添加</button>
+    <ul id="ul"></ul>
+  </div>
+  <script>
+    let input = document.querySelector('#input')
+    let button = document.querySelector('#button')
+    let ul = document.querySelector('#ul')
+    // console.log(input)
+    button.onclick = function () {
+      let li = document.createElement('li')
+      li.innerHTML = input.value
+      // ul.appendChild(li)
+      // input.value = ''
+      if ( ul.children.length === 0 ) {
+        ul.appendChild(li)
+      } else {
+        let first = ul.firstElementChild
+        // insertBefore(element,位置) 
+        ul.insertBefore(li,first)
+      }
+      input.value = ''
+    }
+  </script>
+</body>
+</html>
