@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <title>父组件与局部组件间的数据传递</title>
+</head>
+
+<body>
+  <div id="app">
+    <local-componet :nav="nav" :title="title"></local-componet>
+  </div>
+
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        nav: [
+          '首页',
+          '关于我们',
+          '赞助我们',
+          '我的'
+        ],
+        title: 'Vue.js 组件通信 （父）'
+      },
+      components: {
+        'local-componet': {
+          data: function () {
+            return {
+              title2: 'Vue.js 组件通信 （子）'
+            }
+          },
+          props: ['nav', 'title'],
+          template: `
+            <div>
+                <h1>{{ title }}</h1>
+                <h1>{{ title2 }}</h1>
+                <ul>
+                  <li v-for="item in nav">
+                    <a href="#">{{ item }}</a>
+                  </li>
+                </ul>
+            </div>
+            
+          `
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
+
+<!-- <h1>{{ titleF }}</h1>
+<h1>{{ title2 }}</h1>
+<ul>
+  <li v-for="item in navF"><a href="#">{{ item }}</a>
+  <li>
+</ul> -->
