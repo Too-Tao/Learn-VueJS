@@ -16,9 +16,13 @@
     <input type="text" v-model="input">
     <button @click="btn">添加</button>
     <ul>
-      <li v-for="item in list">{{ item }}</li>
+      <li v-for="(item,index) in list">{{ item }} 
+          <button @click="del(index)">删除</button>
+          <button @click="edit(index,item)">编辑</button>
+      </li>
     </ul>
   </div>
+  
   <script>
     
     var app = new Vue({
@@ -35,9 +39,20 @@
           //首部添加数据
           this.list.unshift(this.input)
           this.input = ''
+        },
+        del: function (index) {
+          if (confirm('确认删除它吗')) {
+            this.list.splice( index, 1 )
+          } else {
+            return
+          }
+        },
+        edit: function (index,item) {
+          this.list[index] = prompt('修改内容',item)
         }
       }
     })
+    
   </script>
 </body>
 </html>
