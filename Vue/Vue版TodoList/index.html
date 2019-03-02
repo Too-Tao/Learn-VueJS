@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <title>Vue版TodoList</title>
+</head>
+<body>
+  <div id="app">
+    <label for="input">输入代办事项</label>
+    <input name="input" type="text" v-model="msg" placeholder="输入代办事项">
+    <button @click="addList">添加</button>
+    <hr>
+    <ul>
+      <h2>代办事项</h2>
+      <li v-for=" ( item, index ) in list " v-if="!item.done">
+        {{ item.message }}
+        <button @click="handleToUndone(index)">完成</button>
+        <button @click="handleRemove(index)">删除</button>
+        <button @click="handleEdit(index, item)">编辑</button>
+      </li>
+      <hr>
+      <h2>完成事项</h2>
+      <li v-for=" ( item, index ) in list " v-if="item.done">
+        {{ item.message }}
+        <button @click="handleToDone(index)">未做</button>
+        <button @click="handleRemove(index)">删除</button>
+        <button @click="handleEdit(index, item)">编辑</button>
+      </li>
+    </ul>
+    <hr>
+  </div>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        msg: '',
+        list: [
+          { message: '111', done: true },
+          { message: '222', done: false }
+        ]
+      },
+      methods: {
+        //增加一条list
+        addList: function () {
+          //新增的数据排在前面
+          if( this.msg.length !== 0 ) {
+            this.list.unshift({ message: this.msg, done: false })
+            this.msg = ''
+          } else {
+            return 
+          }
+          
+        },
+        //完成事件
+        handleToUndone: function (index) {
+          this.list[index].done = true
+        },
+
+        //删除一条list
+        handleRemove: function (index) {
+          this.list.splice(index,1)
+        },
+
+        //修改一条list
+        handleEdit: function (index, item) {
+          this.list[index].message = prompt('请输入修改内容',item.message)
+        },
+
+        //修改为未完成
+        handleToDone: function (index) {
+          this.list[index].done = false
+        }
+      }
+    })
+  </script>
+</body>
+</html>
