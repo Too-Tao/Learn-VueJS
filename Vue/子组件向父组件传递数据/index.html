@@ -4,28 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <title>子组件向父组件传递数据</title>
 </head>
 <body>
     <div id="app">
       <h3 v-for="item in msg">{{ item }}</h3>
       <hr>
-      <my-component @getData="getData"></my-component>
+      <my-component @getdata="getdata"></my-component>
     </div>
+    
     <script>
       var app = new Vue({
         el: '#app',
         data: {
           msg: ['爸爸1','爸爸2']
         },
+        
         methods: {
-          getData: function (info) {
-            console.log('123')
+          getdata: function (info) {
+            // console.log('123')
             // console.log(info)
-            // info.forEach((value) => {
-            //   this.msg.push(value)
-            // });
+            info.forEach((value) => {
+              this.msg.push(value)
+            });
           }
         },
         components: {
@@ -49,12 +51,13 @@
             methods: {
               send: function () {
                 // console.log(this.childernMsg)
-                this.$emit('getData',this.childernMsg)
+                this.$emit('getdata',this.childernMsg)
               }
             },
           }
         }
       })
+
     </script>
 </body>
 </html>
