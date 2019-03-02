@@ -19,3 +19,6 @@
 * 返回值为boolean类型
 * 会有alert弹窗
 
+### prompt 用法
+* this.list[index] = prompt('修改内容',item)
+
