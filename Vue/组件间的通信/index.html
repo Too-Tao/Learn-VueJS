@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <title>组件间的通信</title>
+</head>
+<body>
+  <div id="app">
+    <component1></component1>
+    <component2></component2>
+  </div>
+  <script>
+    var middle = new Vue()
+    var app = new Vue({
+      el: '#app',
+      components: {
+        'component1': {
+          template: `
+            <div>
+                <h1>{{ msg }}</h1>
+                <button @click="handleClick">Click me !!</button>
+            </div>
+          `,
+          data: function () {
+            return {
+              msg: '我是component1中的message'
+            }
+          },
+          methods: {
+            handleClick: function () {
+              middle.$emit('componentmsg',this.msg)
+            }
+          }
+        },
+        'component2': {
+          template: `
+            <div>
+                <h1>{{ msg }}</h1>
+            </div>
+          `,
+          data: function () {
+            return {
+              msg: '我是component2中的message'
+            }
+          },
+          methods: {
+            handleChangeMsg: function (msg) {
+              console.log('11')
+              this.msg = msg
+            }
+          },
+          mounted: function () {
+            // let current = this
+            middle.$on('componentmsg', this.handleChangeMsg)
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>
