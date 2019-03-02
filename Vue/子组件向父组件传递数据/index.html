@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <title>子组件向父组件传递数据</title>
+</head>
+<body>
+    <div id="app">
+      <h3 v-for="item in msg">{{ item }}</h3>
+      <hr>
+      <my-component><my-component/>
+    </div>
+    <script>
+      var app = new Vue({
+        el: '#app',
+        data: {
+          msg: ['爸爸1','爸爸2']
+        },
+        components: {
+          'my-component': {
+            data: function () {
+              return {
+                childernMsg: [
+                  '儿子1',
+                  '儿子2',
+                  '儿子3',
+                  '儿子4',
+                ]
+              }
+            },  
+            template: `
+              <div>
+                <h4 v-for="item in childernMsg">{{ item }}</h4>
+                <button @click="send">向父组件传递子组件里的数据</button>
+              </div>
+            `,
+            methods: {
+              send: function () {
+                // console.log(this.childernMsg)
+                this.$emit('getData',this.childernMsg)
+              }
+            },
+          }
+        }
+      })
+    </script>
+</body>
+</html>
