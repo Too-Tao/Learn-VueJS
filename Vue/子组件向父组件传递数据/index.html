@@ -11,13 +11,22 @@
     <div id="app">
       <h3 v-for="item in msg">{{ item }}</h3>
       <hr>
-      <my-component><my-component/>
+      <my-component @getData="getData"></my-component>
     </div>
     <script>
       var app = new Vue({
         el: '#app',
         data: {
           msg: ['爸爸1','爸爸2']
+        },
+        methods: {
+          getData: function (info) {
+            console.log('123')
+            // console.log(info)
+            // info.forEach((value) => {
+            //   this.msg.push(value)
+            // });
+          }
         },
         components: {
           'my-component': {
@@ -34,7 +43,7 @@
             template: `
               <div>
                 <h4 v-for="item in childernMsg">{{ item }}</h4>
-                <button @click="send">向父组件传递子组件里的数据</button>
+                <button @click="send">子组件向父组件传递里的数据</button>
               </div>
             `,
             methods: {
