@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <title>自定义局部指令</title>
+</head>
+<body>
+  <div id="app">
+    <input type="text" v-focus>
+  </div>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      directives: {
+        focus: {
+          inserted: function (el) {
+            el.focus()
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>
