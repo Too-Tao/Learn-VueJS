@@ -1,29 +1,17 @@
-# waimai
+# 2019.3.3 多云
 
-## Project setup
+## 在写vue项目时使用了eslint，console.log()会报错
+### 解决办法
+* 在eslint的规则里添加
 ```
-yarn install
+"rules": {
+  "no-console": "off"
+}
 ```
-
-### Compiles and hot-reloads for development
+* 使用window
 ```
-yarn run serve
-```
-
-### Compiles and minifies for production
-```
-yarn run build
+window.console.log()
 ```
 
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 一段优质的代码
+### this.todos = [...this.todos, this.todos]
