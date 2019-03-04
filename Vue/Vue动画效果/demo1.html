@@ -8,6 +8,7 @@
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <title>动画效果</title>
   <style>
+
     .fade-enter-active,
     .fade-leave-active {
       transition: opacity .5s;
@@ -22,7 +23,7 @@
 
 <body>
   <div id="demo">
-    <button v-on:click="show = !show">
+    <button v-on:click="show = !show" class="button">
       Toggle
     </button>
     <transition name="fade">
@@ -33,7 +34,7 @@
     new Vue({
       el: '#demo',
       data: {
-        show: true
+        show: false
       }
     })
   </script>
