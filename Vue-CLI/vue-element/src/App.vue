@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-header></v-header>
+    <v-header :seller="seller"></v-header>
     <div class="tab border-1px">
       <div class="tab-item">
         <router-link to="/goods">商品</router-link>
@@ -34,7 +34,8 @@ export default {
           .get('https://www.easy-mock.com/mock/5c7bd05d5aff8d30f9ea7cd8/api/api')
             .then(data => {
                   data = data.data.data
-                  window.console.log(data.seller)
+                  // window.console.log(data.seller)
+                  this.seller = data.seller
                 })
   }
 }
