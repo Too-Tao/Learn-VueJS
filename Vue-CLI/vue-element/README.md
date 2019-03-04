@@ -126,3 +126,21 @@ filter blur(10px)
   margin-top 64px
   padding-bottom 64px
 ```
+
+## Vue动画效果 + stylus 踩坑
+### 用 transition 包裹需要变化部分的html结构
+#### html
+```
+<transition name="fade">
+  <div class="demo" v-show="detailShow"></div>
+</transition>
+```
+---
+#### stylus
+```
+.demo
+.fade-enter-active, .fade-leave-active
+  transition opactiy 0.7s
+.fade-enter, .fade-leave-to
+  opactiy 0
+```
