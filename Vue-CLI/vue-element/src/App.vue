@@ -34,9 +34,10 @@ export default {
           .get('https://www.easy-mock.com/mock/5c7bd05d5aff8d30f9ea7cd8/api/api')
             .then(data => {
                   data = data.data.data
-                  // window.console.log(data.seller)
+                  window.console.log(data.seller)
                   this.seller = data.seller
                 })
+              
   }
 }
 </script>
