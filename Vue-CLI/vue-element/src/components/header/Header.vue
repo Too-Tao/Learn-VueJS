@@ -53,6 +53,7 @@ export default {
     position relative
     color #ffffff
     background rgba(7,17,27,0.5)
+    overflow hidden
     .content-wrapper
       padding 24px 12px 18px 24px
       font-size 0
@@ -136,7 +137,7 @@ export default {
       .bulletin-title
         vertical-align top 
         display inline-block
-        margin-top 7px
+        margin-top 8px
         width 22px
         height 12px
         bg-image('bulletin')
