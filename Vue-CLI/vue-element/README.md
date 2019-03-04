@@ -94,3 +94,35 @@ axios
 ```
 filter blur(10px)
 ```
+
+## Sticky footers设计
+### sticky footers布局的结构
+#### html结构
+```
+<div class="detail" v-show="detailShow">
+  <div class="detail-wrapper clearfix">
+    <div class="detail-main"></div>
+  </div>
+  <div class="detail-close">
+    <i class="icon-close"></i>
+  </div>
+</div>
+```
+#### 清除浮动 clearfix
+```
+.clearfix
+  display: inline-block
+  &:after
+    display: block
+    content: ''
+    height 0
+    line-height 0
+    clear both
+    visibility hidden
+```
+#### CSS, main 中设置
+```
+.detail-main
+  margin-top 64px
+  padding-bottom 64px
+```
