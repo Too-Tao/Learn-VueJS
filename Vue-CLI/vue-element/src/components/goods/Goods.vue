@@ -1,8 +1,8 @@
 <template>
   <div class="goods">
-    <div class="menu-wrapper">
+    <div class="menu-wrapper" ref="menuWrapper">
       <ul>
-        <li class="menu-item" v-for="(item,index) in goods" :key="index">
+        <li class="menu-item" @click="selectMenu(index,$event)" :class="{'current': currentIndex===index}" v-for="(item,index) in goods" :key="index">
           <span class="text border-1px">
             <span v-show="item.type > 0" class="icon" :class="classMap[item.type]"></span>
             {{ item.name }}
@@ -10,9 +10,9 @@
         </li>
       </ul>
     </div>
-    <div class="foods-wrapper">
+    <div class="foods-wrapper" ref="foodsWrapper">
       <ul>
-        <li v-for="(item,index) in goods" :key="index" class="food-list">
+        <li v-for="(item,index) in goods" :key="index" ref="foodListHook" class="food-list food-list-hook">
           <h1 class="title">{{ item.name }}</h1>
           <ul>
             <li v-for="(food,i) in item.foods" :key="i" class="food-item border-1px">
@@ -41,6 +41,7 @@
 
 <script>
 import axios from 'axios'
+import BScroll from 'better-scroll'
 
 export default {
   name: 'Goods',
@@ -51,7 +52,21 @@ export default {
   },
   data: function () {
     return {
-      goods: []
+      goods: [],
+      listHeight: [],
+      scrollY: 0
+    }
+  },
+  computed: {
+    currentIndex: function () {
+      for (let i = 0; i < this.listHeight.length; i ++) {
+        let height1 = this.listHeight[i]
+        let height2 = this.listHeight[i + 1]
+        if ( !height2 || (this.scrollY >= height1 && this.scrollY < height2 )) {
+          return i
+        }
+      }
+      return 0
     }
   },
   created: function () {
@@ -60,13 +75,51 @@ export default {
             data = data.data.data
             // window.console.log(data.goods)
             this.goods = data.goods
+            this.$nextTick(() => {
+              this._initScroll()
+              this._calculateHeight()
+            })
           })
     this.classMap = ['decrease','discount','special','invoice','guarantee']
+  },
+  methods: {
+    selectMenu: function (index, event) {
+      if(!event._constructed) {
+        return
+      }
+      let foodList = this.$refs.foodListHook
+      let el = foodList[index]
+      this.foodsScroll.scrollToElement(el, 300)
+      window.console.log(index)
+    },
+    _initScroll: function () {
+      this.meunScroll = new BScroll(this.$refs.menuWrapper, {
+        click: true
+      })
+      this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
+        probeType: 3
+      })
+      this.foodsScroll.on('scroll', (pos) => {
+        this.scrollY = Math.abs(Math.round(pos.y))
+      })
+    },
+    _calculateHeight: function () {
+      let foodList = this.$refs.foodListHook
+      // window.console.log(this.$refs.foodListHook)
+      let height = 0
+      this.listHeight.push(height)
+      for (let i = 0; i < foodList.length; i ++) {
+        let item = foodList[i]
+        height += item.clientHeight
+        this.listHeight.push(height)
+      }
+    }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
+  
   @import '../../common/stylus/mixin.styl';
 
   .goods
@@ -80,12 +133,21 @@ export default {
       flex 0 0 80px
       width 80px
       background  #f3f5f7
+      font-size 0
       .menu-item
         display table
         height 54px
         width 56px
         line-height 14px
         padding 0 12px
+        &.current
+          position relative
+          margin-top -1px
+          z-index 10
+          background #ffffff
+          font-weight 700 
+          .text
+            border-none()
         .icon
           vertical-align top
           display inline-block
@@ -112,6 +174,7 @@ export default {
           border-1px(rgba(7,17,27,0.1))
     .foods-wrapper
       flex 1
+      font-size 0
       .title
         padding-left  14px
         height 26px
@@ -141,7 +204,7 @@ export default {
             color rgb(7,17,27)
           .desc
             margin-bottom 8px
-            line-height 10px
+            line-height 12px
             font-size 10px
             color rgb(147,153,159)
           .extra
