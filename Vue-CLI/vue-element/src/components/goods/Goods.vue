@@ -36,12 +36,14 @@
         </li>
       </ul>
     </div>
+    <shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import BScroll from 'better-scroll'
+import Shopcart from '../shopcart/Shopcart.vue'
 
 export default {
   name: 'Goods',
@@ -56,6 +58,9 @@ export default {
       listHeight: [],
       scrollY: 0
     }
+  },
+  components: {
+    'shopcart': Shopcart
   },
   computed: {
     currentIndex: function () {
