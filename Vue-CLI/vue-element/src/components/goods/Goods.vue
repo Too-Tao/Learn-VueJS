@@ -90,7 +90,7 @@ export default {
       let foodList = this.$refs.foodListHook
       let el = foodList[index]
       this.foodsScroll.scrollToElement(el, 300)
-      window.console.log(index)
+      // window.console.log(index)
     },
     _initScroll: function () {
       this.meunScroll = new BScroll(this.$refs.menuWrapper, {
