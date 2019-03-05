@@ -145,3 +145,13 @@ filter blur(10px)
   opactiy 0
 ```
 ## backdrop-filter blur(10px) ios系统的模糊
+
+## 采坑 在Vue上获取DOM
+### 使用ref
+```
+<!-- `vm.$refs.p` will be the DOM node -->
+<p ref="p">hello</p>
+
+<!-- `vm.$refs.child` will be the child component instance -->
+<child-component ref="child"></child-component>
+```
