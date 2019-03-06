@@ -1,6 +1,6 @@
 <template>
   <div class="shopcart">
-    <div class="content">
+    <div class="content" @click="toggleList">
       <div class="content-left">
         <div class="logo-wrapper">
           <div class="logo" :class="{'highlight': totalCount > 0}">
@@ -18,10 +18,34 @@
       </div>
       
     </div>
+    <div class="shopcart-list"
+            v-show="listShow">
+        <div class="list-header">
+          <h1 class="title">购物车</h1>
+          <span class="empty">清空</span>
+        </div>
+        <div class="list-content">
+          <ul>
+            <li class="food"
+                v-for="(food,index) in selectFoods"
+                :key="index"
+            >
+              <span class="name">{{ food.name }}</span>
+              <div class="price">
+                <span>￥{{ food.price * food.count }}</span>
+              </div>
+              <div class="cartcontrol-wrapper">
+                <cartcontrol :food="food"></cartcontrol>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
   </div>
 </template>
 
 <script>
+import Cartcontrol from '../cartcontrol/Cartcontrol.vue'
 export default {
   name: 'Shopcart',
   props: {
@@ -43,6 +67,15 @@ export default {
       type: Number,
       default: 0
     }
+  },
+  data: function () {
+    return {
+      fold: true,
+      collapsed: true
+    }
+  },
+  components: {
+    'cartcontrol': Cartcontrol
   },
   computed: {
     totalPrice: function () {
@@ -75,6 +108,24 @@ export default {
       } else {
         return 'enough'
       }
+    },
+    listShow: function () {
+      if(!this.totalCount) {
+        // this.fold = true
+        return false
+      }
+      if(this.totalCount > 0 && !this.collapsed) {
+        return true
+      }
+      return true
+    }
+  },
+  methods: {
+    toggleList: function () {
+      if (!this.totalCount) {
+        return
+      }
+      this.fold = !this.fold
     }
   }
 }
@@ -171,5 +222,11 @@ export default {
           &.enough
             background #00b43c
             color #ffffff
+    .shopcart-list
+      position absolute
+      left 0
+      top 0
+      z-index -1
+      width 100%
 </style>
 
