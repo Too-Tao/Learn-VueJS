@@ -16,6 +16,7 @@
           {{ payDesc }}
         </div>
       </div>
+      
     </div>
   </div>
 </template>
@@ -29,8 +30,7 @@ export default {
       default: function () {
         return [
           {
-            price: 10,
-            count: 0
+            
           }
         ]
       }
