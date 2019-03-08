@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.bootcss.com/vuex/3.1.0/vuex.js"></script>
+  <script src="https://cdn.bootcss.com/vue/2.6.6/vue.common.dev.js"></script>
+  <title>Vuex</title>
+</head>
+<body>
+  <div id="app">
+    <Counter></Counter>
+  </div>
+  <script>
+    const Counter = {
+      template:`
+        <div>{{ count }}</div>
+      `,
+      computed: {
+        count () {
+          return this.$store.state.count
+        }
+      },
+    }
+
+    Vue.use(Vuex)
+    const store = new Vuex.Store({
+      state: {
+        count: 3
+      }
+    })
+    
+    var app = new Vue({
+      el: '#app',
+      store,
+      components: {
+        Counter
+      }
+    })
+  </script>
+</body>
+</html>
