@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <title>Vue TodoList</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: bisque;
+    }
+    input:disabled {
+      background: #ffffff;
+    }
+    #app {
+      width: 500px;
+      min-height: 300px;
+      box-sizing: border-box;
+      margin: 30px auto;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: #ffffff;
+    }
+    #app h1 {
+      margin: 10px auto;
+      text-align: center;
+    }
+    .inputWrap {
+      display: inline-block;
+      width: 100%;
+      height: 50px;
+      margin: 0 10px;
+      border: 0px;
+      border-radius: 10px;
+      outline: none;
+      font-size: 20px;
+
+    }
+    .liWrap {
+      margin: 10px;
+      padding: 0;
+      list-style: none;
+    }
+    .options {
+      float: right;
+      text-align: center;
+    }
+    .edit, .remove, .toDone, .cycle {
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    .edit {
+      text-align: center;
+      cursor: pointer;
+    }
+    .isDone {
+      color: #eeeeee;
+      cursor: no-drop;
+    }
+    .msgWrap {
+      outline: none;
+      border: 0;
+      margin: 0;
+      padding: 0;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1>Todos</h1>
+    <input
+      type="text"
+      class="inputWrap"
+      placeholder="Done or Do something"
+      v-model="msg"
+      @keyup="add($event)">
+    <ul>
+      <li class="liWrap" v-for="(item, index) in list">
+        <input :class="doneFun(item)"
+                class="msgWrap"
+                v-model="item.message"
+                @keyup="confirmEdit(index, $event)"
+                :disabled="!item.canEdit">
+        <span class="options">
+          <span v-if="!item.done" class="toDone" @click="toDone(index)">&radic;</span>
+          <span v-if="item.editStatus" class="edit" @click="edit(index)">...</span>
+          <span v-if="item.done" class="cycle" @click="cycle(index)">&#8634;</span>
+          <span class="remove" @click="remove(index)">x</span>
+        </span>
+      </li>
+    </ul>
+  </div>
+</body>
+<script>
+  const vm = new Vue({
+    el: '#app',
+    data: {
+      msg: '',
+      list: [
+        { message: '123', done: false, canEdit: true, editStatus: true, cycle: false },
+        { message: '456', done: true, canEdit: true, editStatus: false, cycle: true },
+        { message: '890', done: true, canEdit: true, editStatus: false, cycle: true }
+      ]
+    },
+    methods: {
+      doneFun: function (item) {
+        return {
+          isDone: item.done
+        }
+      },
+      edit: function (index) {
+        this.list[index].canEdit = true
+        this.list[index].editStatus = false
+      },
+      confirmEdit: function (index, e) {
+        if (e.keyCode === 13) {
+          this.list[index].message = e.target.value
+          this.list[index].canEdit = false
+          this.list[index].editStatus = true
+        }
+      },
+      cycle: function (index) {
+        this.list[index].done = false
+        this.list[index].canEdit = false
+        this.list[index].editStatus = true
+        this.list[index].cycle = false
+        let obj =  JSON.parse(JSON.stringify(this.list[index]))
+        this.list.splice(index, 1)
+        this.list.unshift(obj)
+      },
+      add: function (e) {
+        let newMsg = this.msg
+        if (e.keyCode === 13) {
+          this.list.unshift({ message: newMsg, done: false, canEdit: false, editStatus: true, cycle: false })
+          this.msg = ''
+        }
+      },
+      remove: function (index) {
+        this.list.splice(index, 1)
+      },
+      toDone: function (index) {
+        this.list[index].done = true
+        this.list[index].editStatus = false
+      }
+    },
+  })
+</script>
+</html>
